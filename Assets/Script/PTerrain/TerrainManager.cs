@@ -1,12 +1,11 @@
-﻿using UnityEditor;
-using UnityEngine;
-using System;
-using LevelDesign.PTerrain.Tag;
+﻿using UnityEngine;
 using LevelDesign.PTerrain.TRandom;
 using LevelDesign.PTerrain.Common;
 using System.Collections.Generic;
 using LevelDesign.PTerrain.Perlin;
 using LevelDesign.PTerrain.Voronoi;
+using LevelDesign.PTerrain.MidPoint;
+
 
 namespace LevelDesign.PTerrain
 {
@@ -14,21 +13,16 @@ namespace LevelDesign.PTerrain
     [ExecuteInEditMode]
     public class TerrainManager : MonoBehaviour
     {
-        //Helper class and model
-        private BaseTagManager tagManager;
-        private TagProvider tagProvider;
+        //Helper class and model       
         private RandomTerrainHelper randomTerrainHelper;
         private CommonTerrainHelper commonTerrainHelper;
         private PerlinHelper perlinHelper;
         private VoronoiHelper voronoiHelper;
-        private Mode mode;
+        private MidPointHelper midPointHelper;    
 
         //Terrain info
         public Terrain terrain;
         public TerrainData terrainData;
-
-        //Data and properties in inspector
-        public TerrainModel data;
 
         //Random height
         public Vector2 randomHeightRange;
@@ -51,18 +45,31 @@ namespace LevelDesign.PTerrain
         public float voronoiDropoff = 0.6f;
         public int voronoiPeakCount = 8;
 
-
         //Multiple Perlin
         public List<PerlinParameters> perlinList = new List<PerlinParameters>()
         {
             new PerlinParameters()
         };
 
+        //Midpoint data
+        public float midPointMinHeight = 0.1f;
+        public float midPointMaxHeight = 0.3f;
+        public float midPointRoughness = 2.0f;
+        public float midPointHeightPower = 2.0f;
+
+        //Smooth
+        public int smoothAmount = 1;
+
+        //save
+        public string directoryPath = "/Data/HeightMap/Generated/";
+        public string filename = "terrain_";
+
+
         private void OnEnable()
         {
-            Debug.Log("OnEnable");
+            Debug.Log("OnEnable TerrainManager");
             initData();
-            initHelper();           
+            initHelper();
         }
 
         private void initHelper()
@@ -71,6 +78,7 @@ namespace LevelDesign.PTerrain
             commonTerrainHelper = new CommonTerrainHelper();
             perlinHelper = new PerlinHelper();
             voronoiHelper = new VoronoiHelper();
+            midPointHelper = new MidPointHelper();           
         }
 
         private void initData()
@@ -79,57 +87,27 @@ namespace LevelDesign.PTerrain
             terrainData = Terrain.activeTerrain.terrainData;
         }
 
-        private void Awake()
-        {
-            SerializedObject manager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);           
-            isPlayMode();
-            setTag(manager);           
-        }
-
-        private void setTag(SerializedObject manager)
-        {
-            if (data != null)
-            {
-                tagProvider = new TagProvider();
-                tagManager = tagProvider.GetTagManager(manager, data.tagModel, mode);
-                tagManager.InitTags();
-                tagManager.addTerrainTag(gameObject);
-            }
-        }
-
-        private void isPlayMode()
-        {
-            if (EditorApplication.isPlaying)
-            {
-                mode = Mode.Runtime;
-            }
-            else
-            {
-                mode = Mode.Edit;
-            }
-        }
-
         public void GetRandomTerrain()
-        {            
+        {
             randomTerrainHelper.GenerateTerrain(terrainData, randomHeightRange);
         }
 
         public void ResetTerrain()
-        {           
+        {
             commonTerrainHelper.ResetTerrain(terrainData);
         }
 
         public void LoadHeightMap()
         {
-            if(heighMapImage != null)
+            if (heighMapImage != null)
             {
-                randomTerrainHelper.LoadTerrain(terrainData,heighMapImage,heightMapScale);
-            }           
+                randomTerrainHelper.LoadTerrain(terrainData, heighMapImage, heightMapScale);
+            }
         }
 
         public void GetPerlinTerrain()
         {
-            perlinHelper.GetPerlinTerrain(terrainData,perlinXscale,perlinYscale,perlinXoffset,perlinYoffset,perlinOctave,perlinPersistance,perlinHeightScale);
+            perlinHelper.GetPerlinTerrain(terrainData, perlinXscale, perlinYscale, perlinXoffset, perlinYoffset, perlinOctave, perlinPersistance, perlinHeightScale);
         }
 
 
@@ -146,8 +124,7 @@ namespace LevelDesign.PTerrain
 
         public void removePerlin()
         {
-
-         if(perlinList.Count > 0)
+            if (perlinList.Count > 0)
             {
                 perlinList = perlinHelper.removePerlin(perlinList);
             }
@@ -155,8 +132,23 @@ namespace LevelDesign.PTerrain
 
         public void GetVoronoiTerrain()
         {
-            voronoiHelper.GetVoronoiTerrain(terrainData,voronoiMinHeight,voronoiMaxHeight,voronoiFalloff,voronoiDropoff,voronoiPeakCount);                
+            voronoiHelper.GetVoronoiTerrain(terrainData, voronoiMinHeight, voronoiMaxHeight, voronoiFalloff, voronoiDropoff, voronoiPeakCount);
         }
 
+        public void GetMidPointTerrain()
+        {
+            midPointHelper.GetMidPointTerrain(terrainData, midPointMinHeight, midPointMaxHeight, midPointRoughness, midPointHeightPower);
+        }
+
+        public void SmoothTerrain()
+        {
+            commonTerrainHelper.SmoothTerrain(terrainData, smoothAmount);
+        }
+
+
+        public void SaveTerrainHeight()
+        {
+            commonTerrainHelper.SaveHeightMap(terrainData, directoryPath, filename);
+        }
     }
 }

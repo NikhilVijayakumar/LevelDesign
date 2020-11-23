@@ -28,9 +28,15 @@ public class TerrainEditor : Editor
     private SerializedProperty voronoiFalloff;
     private SerializedProperty voronoiDropoff;
     private SerializedProperty voronoiPeakCount;
-
     private GUITableState perlinParameterTable;
     private SerializedProperty perlinList;
+    private SerializedProperty midPointMinHeight;
+    private SerializedProperty midPointMaxHeight;
+    private SerializedProperty midPointRoughness;
+    private SerializedProperty midPointHeightPower;
+    private SerializedProperty smoothAmount;  
+    public SerializedProperty directoryPath ;
+    public SerializedProperty filename ;
 
 
     //show hide properties
@@ -39,6 +45,10 @@ public class TerrainEditor : Editor
     private bool showPerlinMap = false;
     private bool showMultiplePerlinMap = false;
     private bool showVoronoiMap = false;
+    private bool showMidPointMap = false;
+    private bool showSmooth = false;
+    private bool showSplatmap = false;
+    private bool showSave = false;
 
 
 
@@ -70,30 +80,56 @@ public class TerrainEditor : Editor
         voronoiFalloff = serializedObject.FindProperty("voronoiFalloff");
         voronoiDropoff = serializedObject.FindProperty("voronoiDropoff");
         voronoiPeakCount = serializedObject.FindProperty("voronoiPeakCount");
+        midPointMinHeight = serializedObject.FindProperty("midPointMinHeight");
+        midPointMaxHeight = serializedObject.FindProperty("midPointMaxHeight");
+        midPointRoughness = serializedObject.FindProperty("midPointRoughness");
+        midPointHeightPower = serializedObject.FindProperty("midPointHeightPower");
+        smoothAmount = serializedObject.FindProperty("smoothAmount");
+        filename = serializedObject.FindProperty("filename");
+        directoryPath = serializedObject.FindProperty("directoryPath");
 }
 
     public override void OnInspectorGUI()
     {
-        serializedObject.Update();       
-        GenerateRandomTerrain();
+        serializedObject.Update();
         LoadHeightMap();
+        SaveTerrainHeight();
+        GenerateRandomTerrain();      
         PerlinTerrain();
         MultiplePerlinTerrain();
         VoronoiTerrain();
-        ResetTerrain();
-       
+        MidPointTerrain();      
+        SmoothTerrain();
+        ResetTerrain();   
         serializedObject.ApplyModifiedProperties();
     }
 
+
+    private void SaveTerrainHeight()
+    {
+        showSave = EditorGUILayout.Foldout(showSave, "Save Terrain");
+        if (showSave)
+        {
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+            EditorGUILayout.PropertyField(filename);
+            EditorGUILayout.PropertyField(directoryPath);
+            if (GUILayout.Button("Save"))
+            {
+                terrain.SaveTerrainHeight();
+            }
+        }
+    }
+
+
     private void LoadHeightMap()
     {
-        showHeightMapImage = EditorGUILayout.Foldout(showHeightMapImage, "Height map from image");
+        showHeightMapImage = EditorGUILayout.Foldout(showHeightMapImage, "Load Terrain");
         if (showHeightMapImage)
         {
             EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
             EditorGUILayout.PropertyField(heighMapImage);
             EditorGUILayout.PropertyField(heightMapScale);
-            if (GUILayout.Button("Load terrain"))
+            if (GUILayout.Button("Load"))
             {
                 terrain.LoadHeightMap();
             }
@@ -113,13 +149,25 @@ public class TerrainEditor : Editor
         }
     }
 
+    private void MidPointTerrain()
+    {
+        showMidPointMap = EditorGUILayout.Foldout(showMidPointMap, "MidPoint map");
+        if (showMidPointMap)
+        {
+            EditorGUILayout.Slider(midPointMinHeight, 0, 1f, new GUIContent("MinHeight "));
+            EditorGUILayout.Slider(midPointMaxHeight, 0, 1f, new GUIContent("MaxHeight"));
+            EditorGUILayout.Slider(midPointRoughness, 0, 1.5f, new GUIContent("Roughness"));
+            EditorGUILayout.Slider(midPointHeightPower, 1, 2f, new GUIContent("Height Dampner power"));
+
+            if (GUILayout.Button("MidPoint Terrain"))
+            {
+                terrain.GetMidPointTerrain();
+            }
+        }
+    }
+
     private void VoronoiTerrain()
     {
-/*         private SerializedProperty voronoiMinHeight;
-    private SerializedProperty voronoiMaxHeight;
-    private SerializedProperty voronoiFalloff;
-    private SerializedProperty voronoiDropoff;
-    private SerializedProperty voronoiPeakCount;*/
 
     showVoronoiMap = EditorGUILayout.Foldout(showVoronoiMap, "Voronoi Terrain");
         if (showVoronoiMap)
@@ -152,7 +200,6 @@ public class TerrainEditor : Editor
             EditorGUILayout.IntSlider(perlinXoffset, 0, 10000, new GUIContent("X Offset"));
             EditorGUILayout.IntSlider(perlinYoffset, 0, 10000, new GUIContent("Y offset"));
             EditorGUILayout.IntSlider(perlinOctave, 0, 10, new GUIContent("Octave"));
-
 
             if (GUILayout.Button("Perlin Terrain"))
             {
@@ -191,6 +238,21 @@ public class TerrainEditor : Editor
     }
 
 
+    private void SmoothTerrain()
+    {
+        
+        showSmooth = EditorGUILayout.Foldout(showSmooth, "Smooth");
+        if (showSmooth)
+        {
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+            EditorGUILayout.IntSlider(smoothAmount, 1, 10, new GUIContent("Smooth Amount"));
+            if (GUILayout.Button("Smooth"))
+            {
+                terrain.SmoothTerrain();
+            }
+        }
+    }
+
     private void ResetTerrain()
     {
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
@@ -200,3 +262,4 @@ public class TerrainEditor : Editor
         }
     }
 }
+
