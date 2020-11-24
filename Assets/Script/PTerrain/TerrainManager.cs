@@ -38,6 +38,27 @@ namespace LevelDesign.PTerrain
         public float perlinPersistance;
         public float perlinHeightScale = 0.01f;
 
+
+
+        //Multiple Perlin  
+
+        public float multiplePerlinXscale = 0.01f;
+        public float multiplePerlinYscale = 0.01f;
+        public int multiplePerlinXoffset = 1;
+        public int multiplePerlinYoffset = 1;
+        public int multiplePerlinOctave = 8;
+        public float multiplePerlinPersistance;
+        public float multiplePerlinHeightScale = 0.01f;
+        public int multiplePerlinPostion = 0;
+
+
+
+        public List<PerlinParameters> perlinList = new List<PerlinParameters>()
+        {
+            new PerlinParameters()
+        };
+
+
         //Voronoi data
         public float voronoiMinHeight = 0.1f;
         public float voronoiMaxHeight = 1f;
@@ -45,11 +66,6 @@ namespace LevelDesign.PTerrain
         public float voronoiDropoff = 0.6f;
         public int voronoiPeakCount = 8;
 
-        //Multiple Perlin
-        public List<PerlinParameters> perlinList = new List<PerlinParameters>()
-        {
-            new PerlinParameters()
-        };
 
         //Midpoint data
         public float midPointMinHeight = 0.1f;
@@ -117,17 +133,39 @@ namespace LevelDesign.PTerrain
         }
 
 
-        public void addPerlin()
+        public void AddPerlin()
         {
             perlinList.Add(new PerlinParameters());
         }
 
-        public void removePerlin()
+        public void RemovePerlin()
         {
             if (perlinList.Count > 0)
             {
-                perlinList = perlinHelper.removePerlin(perlinList);
+                perlinList = perlinHelper.RemovePerlin(perlinList);
             }
+        }
+
+        public int GetPerlinCount()
+        {
+            if(perlinList.Count == 1)
+            {
+                multiplePerlinPostion = 0;
+            }          
+            return perlinList.Count - 1;
+        }
+
+        public void AddPerlinToTable()
+        { 
+            int index = multiplePerlinPostion;
+            perlinList[index].perlinXscale = multiplePerlinXscale;
+            perlinList[index].perlinYscale = multiplePerlinYscale;
+            perlinList[index].perlinXoffset = multiplePerlinXoffset;
+            perlinList[index].perlinYoffset = multiplePerlinYoffset;
+            perlinList[index].perlinOctave = multiplePerlinOctave;
+            perlinList[index].perlinPersistance = multiplePerlinPersistance;
+            perlinList[index].perlinHeightScale = multiplePerlinHeightScale;
+
         }
 
         public void GetVoronoiTerrain()

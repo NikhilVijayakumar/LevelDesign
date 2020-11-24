@@ -23,21 +23,30 @@ public class TerrainEditor : Editor
     private SerializedProperty perlinOctave ;
     private SerializedProperty perlinPersistance;
     private SerializedProperty perlinHeightScale;
+    private GUITableState perlinParameterTable;
+    private SerializedProperty perlinList;
     private SerializedProperty voronoiMinHeight;
     private SerializedProperty voronoiMaxHeight;
     private SerializedProperty voronoiFalloff;
     private SerializedProperty voronoiDropoff;
     private SerializedProperty voronoiPeakCount;
-    private GUITableState perlinParameterTable;
-    private SerializedProperty perlinList;
     private SerializedProperty midPointMinHeight;
     private SerializedProperty midPointMaxHeight;
     private SerializedProperty midPointRoughness;
     private SerializedProperty midPointHeightPower;
-    private SerializedProperty smoothAmount;  
-    public SerializedProperty directoryPath ;
-    public SerializedProperty filename ;
+    private SerializedProperty smoothAmount;
+    private SerializedProperty directoryPath ;
+    private SerializedProperty filename ;
 
+
+    private SerializedProperty multiplePerlinXscale;
+    private SerializedProperty multiplePerlinYscale;
+    private SerializedProperty multiplePerlinXoffset;
+    private SerializedProperty multiplePerlinYoffset;
+    private SerializedProperty multiplePerlinOctave;
+    private SerializedProperty multiplePerlinPersistance;
+    private SerializedProperty multiplePerlinHeightScale;
+    private SerializedProperty multiplePerlinPostion;
 
     //show hide properties
     private bool showRandom = false;
@@ -73,6 +82,14 @@ public class TerrainEditor : Editor
         perlinOctave = serializedObject.FindProperty("perlinOctave");
         perlinPersistance = serializedObject.FindProperty("perlinPersistance");
         perlinHeightScale = serializedObject.FindProperty("perlinHeightScale");
+        multiplePerlinXscale = serializedObject.FindProperty("multiplePerlinXscale");
+        multiplePerlinYscale = serializedObject.FindProperty("multiplePerlinYscale");
+        multiplePerlinXoffset = serializedObject.FindProperty("multiplePerlinXoffset");
+        multiplePerlinYoffset = serializedObject.FindProperty("multiplePerlinYoffset");
+        multiplePerlinOctave = serializedObject.FindProperty("multiplePerlinOctave");
+        multiplePerlinPersistance = serializedObject.FindProperty("multiplePerlinPersistance");
+        multiplePerlinHeightScale = serializedObject.FindProperty("multiplePerlinHeightScale");
+        multiplePerlinPostion = serializedObject.FindProperty("multiplePerlinPostion");
         perlinParameterTable = new GUITableState("perlinParameterTable");
         perlinList = serializedObject.FindProperty("perlinList");
         voronoiMinHeight = serializedObject.FindProperty("voronoiMinHeight");
@@ -87,6 +104,9 @@ public class TerrainEditor : Editor
         smoothAmount = serializedObject.FindProperty("smoothAmount");
         filename = serializedObject.FindProperty("filename");
         directoryPath = serializedObject.FindProperty("directoryPath");
+
+      
+
 }
 
     public override void OnInspectorGUI()
@@ -215,18 +235,42 @@ public class TerrainEditor : Editor
         showMultiplePerlinMap = EditorGUILayout.Foldout(showMultiplePerlinMap, "Multiple Perlin Terrain");
         if (showMultiplePerlinMap)
         {
+
+
+            int count = terrain.GetPerlinCount(); ;
+          
+            EditorGUILayout.Slider(multiplePerlinXscale, 0, 0.1f, new GUIContent("X scale"));
+            EditorGUILayout.Slider(multiplePerlinYscale, 0, 0.1f, new GUIContent("Y scale"));
+            EditorGUILayout.Slider(multiplePerlinPersistance, 0, 10f, new GUIContent("Persistance"));
+            EditorGUILayout.Slider(multiplePerlinHeightScale, 0, 1f, new GUIContent("HeightScale"));
+            EditorGUILayout.IntSlider(multiplePerlinXoffset, 0, 10000, new GUIContent("X Offset"));
+            EditorGUILayout.IntSlider(multiplePerlinYoffset, 0, 10000, new GUIContent("Y offset"));
+            EditorGUILayout.IntSlider(multiplePerlinOctave, 0, 10, new GUIContent("Octave"));
+
+            if (count >= 1)
+            {
+                EditorGUILayout.IntSlider(multiplePerlinPostion, 0, count, new GUIContent("Postion"));
+            }
+            
+
+            if (GUILayout.Button("Add To Table"))
+            {
+                terrain.AddPerlinToTable();
+            }
+
+            
             EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
             perlinParameterTable = GUITableLayout.DrawTable(perlinParameterTable, perlinList);
             GUILayout.Space(30);
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("+"))
             {
-                terrain.addPerlin();
+                terrain.AddPerlin();
             }
 
             if (GUILayout.Button("-"))
             {
-                terrain.removePerlin();
+                terrain.RemovePerlin();
             }
              EditorGUILayout.EndHorizontal();
             if (GUILayout.Button("Multiple Perlin Terrain"))

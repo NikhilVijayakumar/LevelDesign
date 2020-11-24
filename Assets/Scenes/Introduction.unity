@@ -312,7 +312,9 @@ GameObject:
   - component: {fileID: 1250877007}
   - component: {fileID: 1250877006}
   - component: {fileID: 1250877005}
-  m_Layer: 0
+  - component: {fileID: 1250877012}
+  - component: {fileID: 1250877011}
+  m_Layer: 8
   m_Name: Terrain
   m_TagString: Terrain
   m_Icon: {fileID: 0}
@@ -334,9 +336,51 @@ MonoBehaviour:
   terrain: {fileID: 1250877009}
   terrainData: {fileID: 15600000, guid: 60fd1829ba0e02c4daff568d120b383b, type: 2}
   splatHeightList:
-  - texture: {fileID: 0}
+  - texture: {fileID: 2800000, guid: de70d1ae446e84ee5aa2ea6a420781e8, type: 3}
     minHeight: 0.1
-    maxHeight: 0.2
+    maxHeight: 1
+    minSteepness: 0
+    maxSteepness: 90
+    offset: 0.001
+    noiseX: 0.01
+    noiseY: 0.01
+    noiseScaler: 0.5
+    tileOffset: {x: 0, y: 0}
+    tileSize: {x: 50, y: 50}
+    remove: 0
+  - texture: {fileID: 2800000, guid: dd49ed99f55924d13bacefd240626bc5, type: 3}
+    minHeight: 0
+    maxHeight: 1
+    minSteepness: 5
+    maxSteepness: 30
+    offset: 0.001
+    noiseX: 0.01
+    noiseY: 0.01
+    noiseScaler: 0.5
+    tileOffset: {x: 0, y: 0}
+    tileSize: {x: 50, y: 50}
+    remove: 0
+  - texture: {fileID: 2800000, guid: 1368cbe84e5ef458787070c6ea7ae2ee, type: 3}
+    minHeight: 0.1
+    maxHeight: 0.4
+    minSteepness: 0
+    maxSteepness: 15
+    offset: 0.001
+    noiseX: 0.01
+    noiseY: 0.01
+    noiseScaler: 0.5
+    tileOffset: {x: 0, y: 0}
+    tileSize: {x: 50, y: 50}
+    remove: 0
+  - texture: {fileID: 2800000, guid: 1a378b61a88794346bb69d9ddb138901, type: 3}
+    minHeight: 0.2
+    maxHeight: 1
+    minSteepness: 60
+    maxSteepness: 90
+    offset: 0.001
+    noiseX: 0.01
+    noiseY: 0.01
+    noiseScaler: 0.5
     tileOffset: {x: 0, y: 0}
     tileSize: {x: 50, y: 50}
     remove: 0
@@ -355,7 +399,7 @@ MonoBehaviour:
   terrain: {fileID: 1250877009}
   terrainData: {fileID: 15600000, guid: 60fd1829ba0e02c4daff568d120b383b, type: 2}
   randomHeightRange: {x: 0.012, y: 0.013}
-  heighMapImage: {fileID: 2800000, guid: ba01b53dcff15fa43b2f15be127e9569, type: 3}
+  heighMapImage: {fileID: 2800000, guid: 28982a8b9fdbc2340a086a60a28876cf, type: 3}
   heightMapScale: {x: 1, y: 1, z: 1}
   perlinXscale: 0.01
   perlinYscale: 0.0176
@@ -364,33 +408,49 @@ MonoBehaviour:
   perlinOctave: 8
   perlinPersistance: 1.03
   perlinHeightScale: 0.091
+  multiplePerlinXscale: 0.0108
+  multiplePerlinYscale: 0.0176
+  multiplePerlinXoffset: 675
+  multiplePerlinYoffset: 2343
+  multiplePerlinOctave: 8
+  multiplePerlinPersistance: 2.6
+  multiplePerlinHeightScale: 0.141
+  multiplePerlinPostion: 1
+  perlinList:
+  - perlinXscale: 0.0172
+    perlinYscale: 0.024
+    perlinXoffset: 1421
+    perlinYoffset: 2167
+    perlinOctave: 8
+    perlinPersistance: 0.7
+    perlinHeightScale: 0.168
+    remove: 0
+  - perlinXscale: 0.0108
+    perlinYscale: 0.0176
+    perlinXoffset: 675
+    perlinYoffset: 2343
+    perlinOctave: 8
+    perlinPersistance: 2.6
+    perlinHeightScale: 0.141
+    remove: 0
+  - perlinXscale: 0.0108
+    perlinYscale: 0.0176
+    perlinXoffset: 2355
+    perlinYoffset: 1530
+    perlinOctave: 8
+    perlinPersistance: 0.7
+    perlinHeightScale: 0.071
+    remove: 0
   voronoiMinHeight: 0.1
   voronoiMaxHeight: 1
   voronoiFalloff: 0.2
   voronoiDropoff: 0.6
   voronoiPeakCount: 8
-  perlinList:
-  - perlinXscale: 0.01
-    perlinYscale: 0.01
-    perlinXoffset: 1
-    perlinYoffset: 1
-    perlinOctave: 8
-    perlinPersistance: 0
-    perlinHeightScale: 0.01
-    remove: 0
-  - perlinXscale: 0.01
-    perlinYscale: 0.01
-    perlinXoffset: 1
-    perlinYoffset: 1
-    perlinOctave: 8
-    perlinPersistance: 0
-    perlinHeightScale: 0.01
-    remove: 0
   midPointMinHeight: 0.1
   midPointMaxHeight: 0.3
   midPointRoughness: 2
   midPointHeightPower: 2
-  smoothAmount: 6
+  smoothAmount: 10
   directoryPath: /Data/HeightMap/Generated/
   filename: terrain_
 --- !u!114 &1250877007
@@ -463,6 +523,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1250877011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250877004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74db8abf8405cfa46bd92697d4b518f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainLayer: 8
+--- !u!114 &1250877012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250877004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64dc610af468d544884de2f2136a3e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrain: {fileID: 1250877009}
+  terrainData: {fileID: 15600000, guid: 60fd1829ba0e02c4daff568d120b383b, type: 2}
+  maxTrees: 5000
+  treeSpacing: 5
+  vegitationList:
+  - mesh: {fileID: 0}
+    minHeight: 0.1
+    maxHeight: 0.2
+    minSteepness: 0
+    maxSteepness: 90
+    remove: 0
 --- !u!1 &1400126286
 GameObject:
   m_ObjectHideFlags: 0
