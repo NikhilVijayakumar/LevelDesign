@@ -310,10 +310,11 @@ GameObject:
   - component: {fileID: 1250877009}
   - component: {fileID: 1250877008}
   - component: {fileID: 1250877007}
-  - component: {fileID: 1250877006}
-  - component: {fileID: 1250877005}
   - component: {fileID: 1250877012}
   - component: {fileID: 1250877011}
+  - component: {fileID: 1250877006}
+  - component: {fileID: 1250877005}
+  - component: {fileID: 1250877013}
   m_Layer: 8
   m_Name: Terrain
   m_TagString: Terrain
@@ -330,59 +331,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1250877004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 445752baa9403894c896890a2515adae, type: 3}
+  m_Script: {fileID: 11500000, guid: b64dc610af468d544884de2f2136a3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 1250877009}
   terrainData: {fileID: 15600000, guid: 60fd1829ba0e02c4daff568d120b383b, type: 2}
-  splatHeightList:
-  - texture: {fileID: 2800000, guid: de70d1ae446e84ee5aa2ea6a420781e8, type: 3}
-    minHeight: 0.1
-    maxHeight: 1
-    minSteepness: 0
-    maxSteepness: 90
-    offset: 0.001
-    noiseX: 0.01
-    noiseY: 0.01
-    noiseScaler: 0.5
-    tileOffset: {x: 0, y: 0}
-    tileSize: {x: 50, y: 50}
-    remove: 0
-  - texture: {fileID: 2800000, guid: dd49ed99f55924d13bacefd240626bc5, type: 3}
+  maxTrees: 7570
+  treeSpacing: 48
+  vegitationList:
+  - mesh: {fileID: 0}
     minHeight: 0
     maxHeight: 1
-    minSteepness: 5
-    maxSteepness: 30
-    offset: 0.001
-    noiseX: 0.01
-    noiseY: 0.01
-    noiseScaler: 0.5
-    tileOffset: {x: 0, y: 0}
-    tileSize: {x: 50, y: 50}
-    remove: 0
-  - texture: {fileID: 2800000, guid: 1368cbe84e5ef458787070c6ea7ae2ee, type: 3}
-    minHeight: 0.1
-    maxHeight: 0.4
     minSteepness: 0
-    maxSteepness: 15
-    offset: 0.001
-    noiseX: 0.01
-    noiseY: 0.01
-    noiseScaler: 0.5
-    tileOffset: {x: 0, y: 0}
-    tileSize: {x: 50, y: 50}
-    remove: 0
-  - texture: {fileID: 2800000, guid: 1a378b61a88794346bb69d9ddb138901, type: 3}
-    minHeight: 0.2
-    maxHeight: 1
-    minSteepness: 60
     maxSteepness: 90
-    offset: 0.001
-    noiseX: 0.01
-    noiseY: 0.01
-    noiseScaler: 0.5
-    tileOffset: {x: 0, y: 0}
-    tileSize: {x: 50, y: 50}
+    minScale: 0.5
+    maxScale: 1
+    color1: {r: 1, g: 1, b: 1, a: 1}
+    color2: {r: 1, g: 1, b: 1, a: 1}
+    lightColor: {r: 1, g: 1, b: 1, a: 1}
+    minRotation: 0
+    maxRotation: 360
+    density: 0.5
     remove: 0
 --- !u!114 &1250877006
 MonoBehaviour:
@@ -393,66 +362,72 @@ MonoBehaviour:
   m_GameObject: {fileID: 1250877004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2a2afce8f8d29345b5abd4e76e368bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 445752baa9403894c896890a2515adae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 1250877009}
   terrainData: {fileID: 15600000, guid: 60fd1829ba0e02c4daff568d120b383b, type: 2}
-  randomHeightRange: {x: 0.012, y: 0.013}
-  heighMapImage: {fileID: 2800000, guid: 28982a8b9fdbc2340a086a60a28876cf, type: 3}
-  heightMapScale: {x: 1, y: 1, z: 1}
-  perlinXscale: 0.01
-  perlinYscale: 0.0176
-  perlinXoffset: 1260
-  perlinYoffset: 2024
-  perlinOctave: 8
-  perlinPersistance: 1.03
-  perlinHeightScale: 0.091
-  multiplePerlinXscale: 0.0108
-  multiplePerlinYscale: 0.0176
-  multiplePerlinXoffset: 675
-  multiplePerlinYoffset: 2343
-  multiplePerlinOctave: 8
-  multiplePerlinPersistance: 2.6
-  multiplePerlinHeightScale: 0.141
-  multiplePerlinPostion: 1
-  perlinList:
-  - perlinXscale: 0.0172
-    perlinYscale: 0.024
-    perlinXoffset: 1421
-    perlinYoffset: 2167
-    perlinOctave: 8
-    perlinPersistance: 0.7
-    perlinHeightScale: 0.168
+  splatHeightList:
+  - texture: {fileID: 2800000, guid: 7a2668fa90c6243329bda39399367ade, type: 3}
+    minHeight: 0
+    maxHeight: 0.1
+    minSteepness: 0
+    maxSteepness: 10
+    offset: 0.001
+    noiseX: 0.01
+    noiseY: 0.01
+    noiseScaler: 0.5
+    tileOffset: {x: 0, y: 0}
+    tileSize: {x: 50, y: 50}
     remove: 0
-  - perlinXscale: 0.0108
-    perlinYscale: 0.0176
-    perlinXoffset: 675
-    perlinYoffset: 2343
-    perlinOctave: 8
-    perlinPersistance: 2.6
-    perlinHeightScale: 0.141
+  - texture: {fileID: 2800000, guid: 79d5431cd68194d08a40d2bbe4ebcef9, type: 3}
+    minHeight: 0.2
+    maxHeight: 0.6
+    minSteepness: 30
+    maxSteepness: 60
+    offset: 0.001
+    noiseX: 0.01
+    noiseY: 0.01
+    noiseScaler: 0.5
+    tileOffset: {x: 0, y: 0}
+    tileSize: {x: 50, y: 50}
     remove: 0
-  - perlinXscale: 0.0108
-    perlinYscale: 0.0176
-    perlinXoffset: 2355
-    perlinYoffset: 1530
-    perlinOctave: 8
-    perlinPersistance: 0.7
-    perlinHeightScale: 0.071
+  - texture: {fileID: 2800000, guid: cf232666bd1f04c1a8a5a7f71eb60617, type: 3}
+    minHeight: 0.1
+    maxHeight: 0.5
+    minSteepness: 45
+    maxSteepness: 90
+    offset: 0.001
+    noiseX: 0.01
+    noiseY: 0.01
+    noiseScaler: 0.5
+    tileOffset: {x: 0, y: 0}
+    tileSize: {x: 50, y: 50}
     remove: 0
-  voronoiMinHeight: 0.1
-  voronoiMaxHeight: 1
-  voronoiFalloff: 0.2
-  voronoiDropoff: 0.6
-  voronoiPeakCount: 8
-  midPointMinHeight: 0.1
-  midPointMaxHeight: 0.3
-  midPointRoughness: 2
-  midPointHeightPower: 2
-  smoothAmount: 10
-  directoryPath: /Data/HeightMap/Generated/
-  filename: terrain_
+  - texture: {fileID: 2800000, guid: e4cc6b89f7fe0415b99809d203397c20, type: 3}
+    minHeight: 0.1
+    maxHeight: 0.2
+    minSteepness: 5
+    maxSteepness: 20
+    offset: 0.001
+    noiseX: 0.01
+    noiseY: 0.01
+    noiseScaler: 0.5
+    tileOffset: {x: 0, y: 0}
+    tileSize: {x: 50, y: 50}
+    remove: 0
+  - texture: {fileID: 2800000, guid: dd49ed99f55924d13bacefd240626bc5, type: 3}
+    minHeight: 0.1
+    maxHeight: 0.1
+    minSteepness: 20
+    maxSteepness: 69
+    offset: 0.001
+    noiseX: 0.01
+    noiseY: 0.01
+    noiseScaler: 0.5
+    tileOffset: {x: 0, y: 0}
+    tileSize: {x: 50, y: 50}
+    remove: 0
 --- !u!114 &1250877007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +465,7 @@ Terrain:
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_DetailObjectDistance: 5643
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -532,10 +507,50 @@ MonoBehaviour:
   m_GameObject: {fileID: 1250877004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74db8abf8405cfa46bd92697d4b518f6, type: 3}
+  m_Script: {fileID: 11500000, guid: e2a2afce8f8d29345b5abd4e76e368bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainLayer: 8
+  terrain: {fileID: 1250877009}
+  terrainData: {fileID: 15600000, guid: 60fd1829ba0e02c4daff568d120b383b, type: 2}
+  randomHeightRange: {x: 0, y: 0}
+  heighMapImage: {fileID: 2800000, guid: e59a3aa00b7fa294d8a65f0f860db6a5, type: 3}
+  heightMapScale: {x: 1, y: 0.5, z: 1}
+  perlinXscale: 0.01
+  perlinYscale: 0.01
+  perlinXoffset: 1
+  perlinYoffset: 1
+  perlinOctave: 8
+  perlinPersistance: 0
+  perlinHeightScale: 0.01
+  multiplePerlinXscale: 0.01
+  multiplePerlinYscale: 0.01
+  multiplePerlinXoffset: 1
+  multiplePerlinYoffset: 1
+  multiplePerlinOctave: 8
+  multiplePerlinPersistance: 0
+  multiplePerlinHeightScale: 0.01
+  multiplePerlinPostion: 0
+  perlinList:
+  - perlinXscale: 0.01
+    perlinYscale: 0.01
+    perlinXoffset: 1
+    perlinYoffset: 1
+    perlinOctave: 8
+    perlinPersistance: 0
+    perlinHeightScale: 0.01
+    remove: 0
+  voronoiMinHeight: 0.1
+  voronoiMaxHeight: 1
+  voronoiFalloff: 0.2
+  voronoiDropoff: 0.6
+  voronoiPeakCount: 8
+  midPointMinHeight: 0.1
+  midPointMaxHeight: 0.3
+  midPointRoughness: 2
+  midPointHeightPower: 2
+  smoothAmount: 10
+  directoryPath: /Data/HeightMap/Generated/
+  filename: terrain_
 --- !u!114 &1250877012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,19 +560,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 1250877004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b64dc610af468d544884de2f2136a3e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 74db8abf8405cfa46bd92697d4b518f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainLayer: 8
+--- !u!114 &1250877013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250877004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82697c5a4293bbd4f87e758fe2ae31e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 1250877009}
   terrainData: {fileID: 15600000, guid: 60fd1829ba0e02c4daff568d120b383b, type: 2}
-  maxTrees: 5000
-  treeSpacing: 5
-  vegitationList:
-  - mesh: {fileID: 0}
+  maxDetails: 5643
+  detailSpacing: 18
+  detailList:
+  - prototype: {fileID: 0}
+    prototypeTexture: {fileID: 2800000, guid: 4c3440f2bd11488b1100df5944295342, type: 3}
+    minHeight: 0
+    maxHeight: 1
+    minSteepness: 0
+    maxSteepness: 30
+    dryColor: {r: 1, g: 1, b: 1, a: 1}
+    healthyColor: {r: 1, g: 1, b: 1, a: 1}
+    heightRange: {x: 2, y: 2}
+    widthRange: {x: 2, y: 2}
+    noiseSpread: 0.8
+    overlap: 0.01
+    feather: 0.05
+    density: 1
+    remove: 0
+  - prototype: {fileID: -927199367670048503, guid: 8e41f14c6552d48e6a7992aaecc808e4, type: 3}
+    prototypeTexture: {fileID: 0}
     minHeight: 0.1
     maxHeight: 0.2
     minSteepness: 0
-    maxSteepness: 90
+    maxSteepness: 5
+    dryColor: {r: 1, g: 1, b: 1, a: 1}
+    healthyColor: {r: 1, g: 1, b: 1, a: 1}
+    heightRange: {x: 1, y: 1}
+    widthRange: {x: 1, y: 1}
+    noiseSpread: 0.5
+    overlap: 0.01
+    feather: 0.05
+    density: 0.01
     remove: 0
 --- !u!1 &1400126286
 GameObject:
@@ -579,7 +631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &1400126287
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -651,7 +703,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400126286}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 635, y: 385.7, z: 459}
+  m_LocalPosition: {x: 429.37, y: 142, z: 437.695}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1059869983}

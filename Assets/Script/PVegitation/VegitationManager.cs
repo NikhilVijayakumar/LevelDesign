@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using LevelDesign.PVegitation.PTree;
-
+using LevelDesign.PLayer;
 
 namespace LevelDesign.PVegitation
 {
@@ -16,6 +16,7 @@ namespace LevelDesign.PVegitation
         public TerrainData terrainData;
 
         private VegitationHelper VegitationHelper;
+        private int terrainLayer = -1;
 
         //Vegitation    
         public int maxTrees = 5000;
@@ -35,13 +36,15 @@ namespace LevelDesign.PVegitation
 
         private void initHelper()
         {
-            VegitationHelper = new VegitationHelper();
+            VegitationHelper = new VegitationHelper(terrainData);
         }
 
         private void initData()
         {
             terrain = GetComponent<Terrain>();
             terrainData = Terrain.activeTerrain.terrainData;
+            terrainLayer = GetComponent<LayerManager>().terrainLayer;
+            
         }
 
         public void AddVegitation()
@@ -53,13 +56,19 @@ namespace LevelDesign.PVegitation
         {
             if (vegitationList.Count > 0)
             {
-                vegitationList = VegitationHelper.RemoveVegitation(vegitationList);
+                VegitationHelper.SetVegitationList(vegitationList);
+                vegitationList = VegitationHelper.RemoveVegitation();
             }
         }
 
         public void PlantTree()
         {
-            VegitationHelper.plantTree(terrainData,vegitationList,treeSpacing,maxTrees);
+            VegitationHelper.SetVegitationList(vegitationList);
+            VegitationHelper.SetTreeSpacing(treeSpacing);
+            VegitationHelper.SetMaxTrees(maxTrees);
+            VegitationHelper.SetTerrainLayer(terrainLayer);
+            VegitationHelper.SetTerrainPosition(this.transform.position);
+            VegitationHelper.plantTree();
         }
     }
 }

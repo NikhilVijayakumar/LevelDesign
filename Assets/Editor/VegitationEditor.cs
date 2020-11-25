@@ -57,7 +57,7 @@ public class VegitationEditor : Editor
             EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
             EditorGUILayout.IntSlider(maxTrees, 0, 10000, new GUIContent("max Trees"));
-            EditorGUILayout.IntSlider(treeSpacing, 0, 10, new GUIContent("tree Spacing"));
+            EditorGUILayout.IntSlider(treeSpacing, 16, 75, new GUIContent("tree Spacing"));
 
             vegitationTable = GUITableLayout.DrawTable(vegitationTable, vegitationList);
             GUILayout.Space(30);

@@ -14,7 +14,7 @@ namespace LevelDesign.PLayer
         public const string CLOUD = "Cloud";
         public const string SHORE = "Shore";
         [SerializeField]
-        int terrainLayer = -1;
+        public int terrainLayer = -1;
         private void Awake()
         {
             InitLayers();          
