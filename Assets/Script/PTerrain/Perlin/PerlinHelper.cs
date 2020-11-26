@@ -65,7 +65,7 @@ namespace LevelDesign.PTerrain.Perlin
             terrainData.SetHeights(0, 0, heightMap);
         }
 
-        public List<PerlinParameters> removePerlin(List<PerlinParameters> perlinList)
+        public List<PerlinParameters> RemovePerlin(List<PerlinParameters> perlinList)
         {
             List<PerlinParameters> keepList = new List<PerlinParameters>();
             foreach (PerlinParameters perlinParameters in perlinList)

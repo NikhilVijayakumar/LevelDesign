@@ -45,9 +45,16 @@ namespace LevelDesign.PTexture.TSplatmap
                     float[] splat = new float[terrainData.alphamapLayers]; 
                     for (int i = 0; i < splatHeightsList.Count; i++)
                     {
-                        float minHeight = splatHeightsList[i].minHeight;
-                        float maxHeight = splatHeightsList[i].maxHeight;
-                        if (heightMap[x, y] >= minHeight && heightMap[x, y] <= maxHeight)
+                        float noise = Mathf.PerlinNoise(x * splatHeightsList[i].noiseX, y * splatHeightsList[i].noiseY) * splatHeightsList[i].noiseScaler;
+                        float offset = splatHeightsList[i].offset + noise;
+                        float minHeight = splatHeightsList[i].minHeight - offset;
+                        float maxHeight = splatHeightsList[i].maxHeight + offset;
+                        float stepness = terrainData.GetSteepness(y / (float)terrainData.alphamapHeight, x / (float)terrainData.alphamapWidth);
+
+                        if (heightMap[x, y] >= minHeight 
+                            && heightMap[x, y] <= maxHeight 
+                            && stepness >= splatHeightsList[i].minSteepness 
+                            && stepness <= splatHeightsList[i].maxSteepness)
                         {
                             splat[i] = 1;
                         }
