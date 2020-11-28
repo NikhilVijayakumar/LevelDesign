@@ -107,10 +107,41 @@ namespace LevelDesign.PTerrain.Common
 
         }
 
+        public List<Vector2> GenerateNeighbours(Vector2 pos, int width, int height)
+        {
+            List<Vector2> neighbours = new List<Vector2>();
+            for (int y = -1; y < 2; y++)
+            {
+                for (int x = -1; x < 2; x++)
+                {
+                    if (!(x == 0 && y == 0))
+                    {
+                        Vector2 nPos = new Vector2(Mathf.Clamp(pos.x + x, 0, width - 1),
+                                                    Mathf.Clamp(pos.y + y, 0, height - 1));
+                        if (!neighbours.Contains(nPos))
+                        {
+                            neighbours.Add(nPos);
+                        }
+
+                    }
+                }
+            }
+            return neighbours;
+        }
+
+        public  System.Random r = new System.Random();
+        public  void Shuffle(List<Vector2> list)
+        {
+            for (int i = list.Count-1; i > 1; i--)
+            {
+                int k = r.Next(i + 1);
+                Vector2 value = list[k];
+                list[k] = list[i];
+                list[i] = value;
+            }
+        }
+
     }
-
-
-
 }
 
 
