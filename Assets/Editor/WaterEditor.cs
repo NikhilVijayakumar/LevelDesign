@@ -21,15 +21,10 @@ public class WaterEditor : Editor
     //show hide properties
     private bool showDetails = false;
 
-
-
-
     private void OnEnable()
     {
         waterManager = (WaterManager)target;
-        initSerilizeValue();
-        
-        
+        initSerilizeValue();   
     }
 
     private void initSerilizeValue()
@@ -53,8 +48,7 @@ public class WaterEditor : Editor
         {
            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
            EditorGUILayout.Slider(waterHeight, 0f, 1f, new GUIContent("Water Height"));
-           EditorGUILayout.PropertyField(waterGO);
-            
+           EditorGUILayout.PropertyField(waterGO);            
             if (GUILayout.Button("Add Water"))
             {
                 waterManager.AddWaterDetails();
@@ -65,7 +59,6 @@ public class WaterEditor : Editor
             {
                 waterManager.DrawShoreLine();
             }
-
         }
     }
 

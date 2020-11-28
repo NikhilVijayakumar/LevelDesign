@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using LevelDesign.PWater.Helper;
+using LevelDesign.PTerrain.Common;
 
 namespace LevelDesign.PWater
 {
@@ -12,7 +12,7 @@ namespace LevelDesign.PWater
         public Terrain terrain;
         public TerrainData terrainData;
         private const string WATER = "water";
-        private WaterHelper waterHelper;
+        private CommonTerrainHelper helper;
 
         private const string SHORE = "Shore";
         private const string SHORELINE = "ShoreLine";
@@ -25,19 +25,14 @@ namespace LevelDesign.PWater
         private void OnEnable()
         {
             Debug.Log("OnEnable TextureManager");
-            initData();
-            initHelper();
-        }
-
-        private void initHelper()
-        {
-            waterHelper = new WaterHelper(terrainData);
+            initData();          
         }
 
         private void initData()
         {
             terrain = GetComponent<Terrain>();
             terrainData = Terrain.activeTerrain.terrainData;
+            helper = new CommonTerrainHelper();
         }
 
         public void AddWaterDetails()
@@ -55,15 +50,14 @@ namespace LevelDesign.PWater
         }
         public void DrawShoreLine()
         {
-            float[,] heightMap = terrainData.GetHeights(0, 0, terrainData.heightmapResolution, terrainData.heightmapResolution);
-          
-            //GameObject quad = new GameObject("Quads");
+            float[,] heightMap = terrainData.GetHeights(0, 0, terrainData.heightmapResolution, terrainData.heightmapResolution);          
+           
             for (int y = 0; y < terrainData.heightmapResolution;y++)
             {
                 for (int x = 0; x < terrainData.heightmapResolution; x++)
                 {
                     Vector2 location = new Vector2(x, y);
-                    List<Vector2> neighbours = GenerateNeighbours(location,
+                    List<Vector2> neighbours = helper.GenerateNeighbours(location,
                                                             terrainData.heightmapResolution,
                                                             terrainData.heightmapResolution);
                     foreach(Vector2 n in neighbours)
@@ -88,8 +82,7 @@ namespace LevelDesign.PWater
                     }
                 }
             }
-            combineShore();
-           // DestroyImmediate(quad);
+            combineShore();           
         }
 
         private void combineShore()
@@ -128,30 +121,8 @@ namespace LevelDesign.PWater
             {
                 DestroyImmediate(shoreQuads[i]);
             }
-
-
         }
 
-       private List<Vector2> GenerateNeighbours(Vector2 pos, int width, int height)
-        {
-            List<Vector2> neighbours = new List<Vector2>();
-            for (int y = -1; y < 2; y++)
-            {
-                for (int x = -1; x < 2; x++)
-                {
-                    if (!(x == 0 && y == 0))
-                    {
-                        Vector2 nPos = new Vector2(Mathf.Clamp(pos.x + x, 0, width - 1),
-                                                    Mathf.Clamp(pos.y + y, 0, height - 1));
-                        if (!neighbours.Contains(nPos))
-                        {
-                            neighbours.Add(nPos);
-                        }
-                           
-                    }
-                }
-            }
-            return neighbours;
-        }
+      
     }
 }
